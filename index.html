@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="//unpkg.com/vue@3"></script>
+</head>
+<body>
+<div>
+    <div style="display: grid; grid-template-columns: auto 1fr; gap: 5px 10px;">
+        <span>Title</span>
+        <input type="text" v-model="data.title">
+        <span>Limit</span>
+        <input type="number" v-model="data.limit">
+        <span>Date</span>
+        <input type="date" v-model="formattedDate">
+        <span>Time</span>
+        <input type="time" v-model="data.time">
+    </div>
+    <pre style="user-select: all">/quickcreate arguments:[time:{{data.time}}][advanced: &lt;limit:{{data.limit}}&gt;][template: 4][title:{{ data.title }}][date:{{ formattedDateReverse }}]</pre>
+</div>
+<script>
+    Vue.createApp({
+        data: () => ({
+            data: {
+                date: (() => {
+                    const now = new Date();
+                    now.setDate(now.getDate() + 7)
+                    return now
+                })(),
+                time: '20:00',
+                limit: 10
+            }
+        }),
+        computed:{
+            formattedDateReverse(){
+                return [
+                    this.data.date.getDate(),
+                    this.data.date.getMonth()+1,
+                    this.data.date.getFullYear(),
+                ].join('-')
+            },
+            formattedDate(){
+                return [
+                    this.data.date.getFullYear(),
+                    this.data.date.getMonth()+1,
+                    this.data.date.getDate(),
+                ].join('-')
+            }
+        }
+    }).mount('body>div')
+</script>
+</body>
+</html>
